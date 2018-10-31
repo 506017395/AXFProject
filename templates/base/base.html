@@ -2,9 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{% static "base/css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "base/css/reset.css" %}">
+    <link rel="stylesheet" href="{% static "base/css/swiper.css" %}">
+    <link rel="stylesheet" href="{% static "base/css/base.css" %}">
     {#css#}
     {% block extcss %}
     {% endblock %}
+    <script src="{% static "base/js/jquery.js" %}"></script>
+    <script src="{% static "base/js/bootstrap.js" %}"></script>
+    <script src="{% static "base/js/swiper.js" %}"></script>
+    <script src="{% static "base/js/base.js" %}"></script>
     {#js#}
     {% block extjs %}
     {% endblock %}
@@ -15,7 +23,7 @@
 <body>
 {#header begin#}
 {% block header %}
-    <header>头部</header>
+    <header>爱鲜蜂</header>
 {% endblock %}
 {#header end#}
 
