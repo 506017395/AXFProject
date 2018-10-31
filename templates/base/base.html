@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {#css#}
+    {% block extcss %}
+    {% endblock %}
+    {#js#}
+    {% block extjs %}
+    {% endblock %}
+    <meta charset="UTF-8">
+    {#tltle#}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+{#header begin#}
+{% block header %}
+    <header>头部</header>
+{% endblock %}
+{#header end#}
+
+{#content begin#}
+<div class="hidescroll">
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+{#content end#}
+
+{#footer begin#}
+{% block footer %}
+    <footer>尾部</footer>
+{% endblock %}
+{#footer end#}
+</body>
+</html>
