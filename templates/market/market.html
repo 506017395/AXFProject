@@ -1,3 +1,17 @@
+{#继承base模板#}
 {% extends "base/base.html" %}
+{% load static %}
+{#css#}
+{% block extcss %}
+    <link rel="stylesheet" href="{% static "market/css/market.css" %}">
+{% endblock %}
+{#js#}
+{% block extjs %}
 
+{% endblock %}
+{#标题#}
 {% block title %}闪购超市{% endblock %}
+{#body内容#}
+{% block content %}
+
+{% endblock %}

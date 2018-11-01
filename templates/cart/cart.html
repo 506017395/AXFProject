@@ -1,0 +1,17 @@
+{#继承base模板#}
+{% extends "base/base.html" %}
+{% load static %}
+{#css#}
+{% block extcss %}
+    <link rel="stylesheet" href="{% static "cart/css/cart.css" %}">
+{% endblock %}
+{#js#}
+{% block extjs %}
+
+{% endblock %}
+{#标题#}
+{% block title %}购物车{% endblock %}
+{#body内容#}
+{% block content %}
+
+{% endblock %}

@@ -1,10 +1,22 @@
 from django.shortcuts import render
 
-
 # Create your views here.
 # 首页
+from axf.models import Wheel, Nav, Mustbuy
+
+
 def home(request):
-    return render(request, "home/home.html")
+    # 获取轮播数据
+    wheels = Wheel.objects.all()
+    navs = Nav.objects.all()
+    mustbuys = Mustbuy.objects.all()
+    print(len(mustbuys))
+    result = {
+        "wheels": wheels,
+        "navs": navs,
+        "mustbuys": mustbuys,
+    }
+    return render(request, "home/home.html", context=result)
 
 
 # 闪购超市
