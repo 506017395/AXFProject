@@ -18,4 +18,4 @@ table { border-collapse:collapse; border-spacing:0}
 /*.fl{float:left;}.fr{float:right;}.hide{display:none;}.show{display: block;}*/
 .ellipsis { white-space:nowrap; text-overflow:ellipsis; overflow:hidden}
 .break { word-break:break-all; word-wrap:break-word}
-header, footer, article, section, nav, menu, hgroup {display: block;clear:all;}
+header, footer, article, section, nav, menu, hgroup {display: block;clear:none;}
