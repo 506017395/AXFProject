@@ -12,6 +12,7 @@ class Base(models.Model):
         abstract = True
 
 
+# 首页 开始
 # 轮播图
 class Wheel(Base):
     class Meta:
@@ -67,3 +68,39 @@ class Mainshow(models.Model):
 
     class Meta:
         db_table = "axf_mainshow"
+# 首页 结束
+
+
+# 闪购超市 开始
+#  商品类型
+class Foodtypes(models.Model):
+    typeid = models.CharField(max_length=10)  # 类型ID
+    typename = models.CharField(max_length=100)  # 分类名称
+    childtypenames = models.CharField(max_length=256)  # 子类名称
+    typesort = models.IntegerField()  # 顺序
+
+    class Meta:
+        db_table = "axf_foodtypes"
+
+
+# 商品信息
+class Goods(models.Model):
+    productid = models.CharField(max_length=10)  # ID
+    productimg = models.CharField(max_length=100)  # 图片
+    productname = models.CharField(max_length=100)  # 名称
+    productlongname = models.CharField(max_length=100)  # 长名称
+    isxf = models.BooleanField(default=False)  # 精选
+    pmdesc = models.BooleanField(default=False)  # 买一送一
+    specifics = models.CharField(max_length=100)  # 规格
+    price = models.DecimalField(max_digits=10, decimal_places=2)  # 价格
+    marketprice = models.DecimalField(max_digits=10, decimal_places=2)  # 商场价格
+    categoryid = models.IntegerField()  # 分类ID
+    childcid = models.IntegerField()  # 子类ID
+    childcidname = models.CharField(max_length=100)  # 分类名称
+    dealerid = models.CharField(max_length=10)  # 详情ID
+    storenums = models.IntegerField()  # 库存
+    productnum = models.IntegerField()  # 销量
+
+    class Meta:
+        db_table = 'axf_goods'
+# 闪购超市 结束
