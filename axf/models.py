@@ -68,6 +68,8 @@ class Mainshow(models.Model):
 
     class Meta:
         db_table = "axf_mainshow"
+
+
 # 首页 结束
 
 
@@ -103,4 +105,21 @@ class Goods(models.Model):
 
     class Meta:
         db_table = 'axf_goods'
+
+
 # 闪购超市 结束
+
+
+# 用户信息
+class User(models.Model):
+    account = models.CharField(max_length=80, unique=True)  # 账号
+    password = models.CharField(max_length=256)  # 密码
+    name = models.CharField(max_length=100)  # 昵称
+    phone = models.CharField(max_length=20, unique=True)  # 手机号码
+    addr = models.CharField(max_length=256)  # 地址
+    img = models.CharField(max_length=100)  # 头像
+    rank = models.IntegerField(default=1)  # 等级
+    token = models.CharField(max_length=256)  # token
+
+    class Meta:
+        db_table = 'axf_user'

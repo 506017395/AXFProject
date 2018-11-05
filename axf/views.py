@@ -69,3 +69,17 @@ def cart(request):
 # 我的
 def mine(request):
     return render(request, "mine/mine.html")
+
+
+# 登录
+def login(request):
+    return None
+
+
+# 注册
+def registe(request):
+    if request.method == "GET":
+        return render(request, "registe/registe.html")
+    elif request.method == "POST":
+        pass
+    return None

@@ -7,4 +7,6 @@ urlpatterns = [
     url("^market/(\d+)/(\d+)$", views.market, name="market"),  # 闪购超市
     url("^cart/$", views.cart, name="cart"),  # 购物车
     url("^mine/$", views.mine, name="mine"),  # 我的
+    url("^login/$", views.login, name="login"),  # 登录
+    url("^registe/$", views.registe, name="registe"),  # 注册
 ]
