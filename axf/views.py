@@ -1,8 +1,14 @@
-from django.shortcuts import render
+import hashlib
+import os
+import uuid
+
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
 
 # Create your views here.
 # 首页
-from axf.models import Wheel, Nav, Mustbuy, Shop, Mainshow, Goods, Foodtypes
+from AXFProject import settings
+from axf.models import Wheel, Nav, Mustbuy, Shop, Mainshow, Goods, Foodtypes, User
 
 
 def home(request):
@@ -68,12 +74,46 @@ def cart(request):
 
 # 我的
 def mine(request):
-    return render(request, "mine/mine.html")
+    token = request.session.get("token")
+    result = {}
+    if token:
+        user = User.objects.get(token=token)
+        result["name"] = user.name
+        result["rank"] = user.rank
+        result["img"] = "/static/uploads/" + user.img
+        result["is_login"] = 1
+    else:
+        result["img"] = "/static/uploads/axf.png"
+    return render(request, "mine/mine.html", context=result)
 
 
 # 登录
 def login(request):
-    return None
+    if request.method == "GET":
+        return render(request, "login/login.html")
+    else:
+        user_info = request.POST
+        result = {
+            "status": -1,
+            "msg": "密码错误,请重新输入!"
+        }
+
+        try:
+            user = User.objects.get(account=user_info.get("account"))
+            if user.password == genarate_password(user_info.get("password")):
+                result["status"] = 0
+                result["msg"] = "登录成功!"
+                request.session["token"] = user.token
+        except Exception as e:
+            result["status"] = 1
+            result["msg"] = "用户名不存在,请注册后登录!"
+        return JsonResponse(result)
+
+
+# 注销
+def logout(request):
+    request.session.flush()
+    return redirect("axf:mine")
 
 
 # 注册
@@ -81,5 +121,42 @@ def registe(request):
     if request.method == "GET":
         return render(request, "registe/registe.html")
     elif request.method == "POST":
-        pass
-    return None
+        user_info = request.POST
+
+        img_name = user_info.get("account") + '.png'
+        img_path = os.path.join(settings.MEDIA_ROOT, img_name)
+        icon = request.FILES.get('icon')
+        with open(img_path, 'wb') as fp:
+            for data in icon.chunks():
+                fp.write(data)
+
+        user = User.create_user(user_info.get("account"), genarate_password(user_info.get("password")),
+                                user_info.get("name"),
+                                user_info.get("phone"), user_info.get("address"), img_name,
+                                str(uuid.uuid5(uuid.uuid4(), 'register')))
+        user.save()
+        request.session['token'] = user.token
+        return redirect('axf:mine')
+
+
+# 检测账户是否存在
+def check_account(request):
+    account = request.GET.get('account')
+    result = {
+        'status': 1,
+        'msg': '账号可以使用',
+    }
+    try:
+        User.objects.get(account=account)
+        result['status'] = -1
+        result['msg'] = '账号已被注册'
+        return JsonResponse(result)
+    except:
+        return JsonResponse(result)
+
+
+# 密码加密
+def genarate_password(param):
+    sha = hashlib.sha256()
+    sha.update(param.encode('utf-8'))
+    return sha.hexdigest()

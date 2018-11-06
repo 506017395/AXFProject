@@ -8,5 +8,7 @@ urlpatterns = [
     url("^cart/$", views.cart, name="cart"),  # 购物车
     url("^mine/$", views.mine, name="mine"),  # 我的
     url("^login/$", views.login, name="login"),  # 登录
+    url("^logout/$", views.logout, name="logout"),  # 注销
     url("^registe/$", views.registe, name="registe"),  # 注册
+    url("^check_account/$", views.check_account, name="check_account"),  # 检测账户是否存在
 ]

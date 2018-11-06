@@ -121,5 +121,10 @@ class User(models.Model):
     rank = models.IntegerField(default=1)  # 等级
     token = models.CharField(max_length=256)  # token
 
+    @classmethod
+    def create_user(cls, account, password, name, phone, address, img, token):
+        user = User(account=account, password=password, name=name, phone=phone,addr=address, img=img, token=token)
+        return user
+
     class Meta:
         db_table = 'axf_user'

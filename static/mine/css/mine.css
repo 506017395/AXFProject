@@ -1,4 +1,4 @@
-.mine {
+.mine{
     height: 100%;
     width: 100%;
 }
@@ -6,49 +6,37 @@
 footer .mine span {
     background-image: url(/static/base/img/mine1.png);
 }
-
 footer .mine dd {
     color: #ffd601;
 }
 
-.mine .user-wrapper {
+.mine .user-wrapper{
     height: 6rem;
     background: pink;
     display: flex;
     padding: 0.8rem;
     position: relative;
 }
-
-.mine .user-wrapper .user-img {
+.mine .user-wrapper .user-img{
     width: 25%;
     text-align: center;
 }
-
-.mine .user-wrapper .user-img img {
+.mine .user-wrapper .user-img img{
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
 }
-
-.mine .user-wrapper .user-content {
+.mine .user-wrapper .user-content{
     width: 75%;
     height: 100%;
-    font-size: 50px;
 }
-
-.mine .user-wrapper .user-content p {
+.mine .user-wrapper .user-content p{
     line-height: 2rem;
 }
-
-.mine .user-wrapper .user-content p a {
-    color: black;
-}
-
-.mine .user-wrapper .user-content span {
+.mine .user-wrapper .user-content span{
     padding-right: 0.4rem;
 }
-
-.mine .user-wrapper .user-content .register {
+.mine .user-wrapper .user-content .register{
     position: absolute;
     right: 0.8rem;
     bottom: 0.8rem;
@@ -57,82 +45,69 @@ footer .mine dd {
     color: white;
 }
 
-.mine .collect {
+
+.mine .collect{
     line-height: 2rem;
     background: #f0e000;
     text-align: center;
 }
-
-.mine .collect b {
-    font-size: 50px;
-}
-
 .mine .collect span,
-.mine .collect .glyphicon {
+.mine .collect .glyphicon{
     vertical-align: middle;
-    font-size: 50px;
 }
 
-.mine .other section {
+.mine .other section{
     background: white;
     padding: 1rem 0;
     margin: 0.5rem 0;
     font-size: 1rem;
 }
 
-.mine .other .my {
+.mine .other .my{
     padding: 0 0.4rem;
     height: 3rem;
     line-height: 3rem;
 }
-
-.mine .other .my span {
+.mine .other .my span{
     float: left;
 }
-
-.mine .other section a {
-    color: black;
-}
-
-.mine .other .my a {
+.mine .other .my a{
     float: right;
     vertical-align: middle;
 }
 
-.mine .other section ul {
+.mine .other section ul{
     display: flex;
+    margin-bottom: 0;
 }
-
-.mine .other section ul li {
+.mine .other section ul li{
     width: 25%;
 }
-
-.mine .other section ul li dl {
+.mine .other section ul li dl{
     text-align: center;
+    margin-bottom: 0;
 }
-
-.mine .other section ul li dl dt {
-    width: 100%;
+.mine .other section ul li dl dt{
+    width:100%;
     line-height: 2rem;
 }
-
-.mine .other section ul li dl dd {
+.mine .other section ul li dl dd{
     font-size: 0.9rem;
 }
 
-.mine .other .quit {
+
+.mine .other .quit{
     text-align: center;
 }
-
-.mine .other .quit a {
+.mine .other .quit a{
     color: grey;
 }
 
-section ul li .item {
+section ul li .item{
     position: relative;
 }
 
-section ul li dl dt .badge {
+section ul li dl dt .badge{
     background: red;
     color: white;
     position: absolute;

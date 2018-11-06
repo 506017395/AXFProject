@@ -16,20 +16,22 @@
     <div class="register">
         {#退出注册#}
         <div class="back">
-            <a href=""><span class="glyphicon glyphicon-remove"></span></a>
+            <a href="{% url "axf:mine" %}"><span class="glyphicon glyphicon-remove"></span></a>
         </div>
 
-        <form action="{% url 'axf:registe' %}" method="post" enctype="multipart/form-data">
+        <form action="{% url 'axf:registe' %}" method="post" enctype="multipart/form-data" id="form_reg">
             {% csrf_token %}
             {#账号#}
             <div class="form-group has-feedback" id="account">
                 <div class="input-group">
                     <div class="input-group-addon">账号</div>
-                    <input type="text" class="form-control" placeholder="请输入6-16位账号" name="account" required="required">
+                    <input type="text" class="form-control" placeholder="字母开头6-16位账号" name="account"
+                           required="required">
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 </div>
                 <i></i>
             </div>
+
             {#密码#}
             <div class="form-group" id="password">
                 <div class="input-group">
@@ -43,7 +45,7 @@
             {#确认密码#}
             <div class="form-group" id="passwd">
                 <div class="input-group">
-                    <div class="input-group-addon">密码</div>
+                    <div class="input-group-addon">验证</div>
                     <input type="password" class="form-control" placeholder="请重新输入密码" name="passwd" required="required">
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 </div>
@@ -70,11 +72,13 @@
             </div>
 
             {#地址#}
-            <div class="form-group" id="addr">
+            <div class="form-group" id="address">
                 <div class="input-group">
                     <div class="input-group-addon">地址</div>
-                    <input type="text" class="form-control" placeholder="请输入收货地址" name="addr" required="required">
+                    <input type="text" class="form-control" placeholder="请输入收货地址" name="address" required="required">
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 </div>
+                <i></i>
             </div>
 
             {#头像#}
@@ -85,7 +89,7 @@
                 </div>
             </div>
 
-            <input type="submit" id="subButton" value="注册">
+            <input type="button" id="sub_button" value="注册">
         </form>
     </div>
 {% endblock %}

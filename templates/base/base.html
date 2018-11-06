@@ -2,8 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    {#tltle#}
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static "base/css/reset.css" %}">
     <link rel="stylesheet" href="{% static "base/css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "base/css/bootstrap-theme.css" %}">
     <link rel="stylesheet" href="{% static "base/css/swiper.css" %}">
     <link rel="stylesheet" href="{% static "base/css/base.css" %}">
     {#css#}
@@ -17,9 +21,6 @@
     {#js#}
     {% block extjs %}
     {% endblock %}
-    <meta charset="UTF-8">
-    {#tltle#}
-    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 {#header begin#}

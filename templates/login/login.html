@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{% load static %}
+{% block extcss %}
+    <link rel="stylesheet" href="{% static "login/css/login.css" %}">
+{% endblock %}
+{% block extjs %}
+    <script src="{% static "login/js/login.js" %}"></script>
+{% endblock %}
+{% block title %}
+    登录
+{% endblock %}
+{% block content %}
+    <div class="login">
+        <div class="back">
+            <a href="{% url 'axf:mine' %}">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        </div>
 
-</body>
-</html>
+        <form action="{% url 'axf:login' %}" method="post" id="form_login">
+            {% csrf_token %}
+            {#账号#}
+            <div class="form-group has-feedback" id="account">
+                <div class="input-group">
+                    <div class="input-group-addon">账号</div>
+                    <input type="text" class="form-control" placeholder="字母开头6-16位账号" name="account"
+                           required="required">
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                </div>
+                <i>{{ acount_error }}</i>
+            </div>
+            {#密码#}
+            <div class="form-group" id="password">
+                <div class="input-group">
+                    <div class="input-group-addon">密码</div>
+                    <input type="password" class="form-control" placeholder="请输入6~18位密码" name="password"
+                           required="required">
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                </div>
+                <i>{{ passwd_error }}</i>
+            </div>
+            <div id="sub_button" class="btn btn-default">
+                登录
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -78,7 +78,7 @@ DATABASES = {
         'NAME': "axfdb",
         "USER": "root",
         "PASSWORD": "lzz666",
-        "HOST": "localhost",
+        "HOST": "182.254.228.82",
         "PORT": "3306"
     }
 }
@@ -122,3 +122,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/uploads')
