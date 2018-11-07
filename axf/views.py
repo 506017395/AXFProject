@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 # 首页
 from AXFProject import settings
-from axf.models import Wheel, Nav, Mustbuy, Shop, Mainshow, Goods, Foodtypes, User
+from axf.models import Wheel, Nav, Mustbuy, Shop, Mainshow, Goods, Foodtypes, User, Cart
 
 
 def home(request):
@@ -58,18 +58,33 @@ def market(request, chilecid=0, sort_index=0):
     goods = goods.order_by("-productnum") if sort_index == "1" else (
         goods.order_by("price") if sort_index == "2" else (goods.order_by("-price") if sort_index == "3" else goods))
 
+    # 购物车
+    token = request.session.get('token')
+    carts = []
+    # 根据用户，获取对应用户下所有购物车数据
+    if token:
+        user = User.objects.get(token=token)
+        carts = Cart.objects.filter(user=user)
+
     result = {
         "foodtypes": foodtypes,
         "goods_list": goods,
         "child_type_list": child_type_list,
         "childc_id": chilecid,
+        "carts": carts,
     }
     return render(request, "market/market.html", context=result)
 
 
 # 购物车
 def cart(request):
-    return render(request, "cart/cart.html")
+    token = request.session.get('token')
+    if token:
+        user = User.objects.get(token=token)
+        carts = Cart.objects.filter(user=user).exclude(number=0)
+        return render(request, 'cart/cart.html', context={'carts': carts})
+    else:
+        return redirect('axf:login')
 
 
 # 我的
@@ -160,3 +175,57 @@ def genarate_password(param):
     sha = hashlib.sha256()
     sha.update(param.encode('utf-8'))
     return sha.hexdigest()
+
+
+# 添加到购物车
+def addcart(request):
+    goods_id = request.GET.get("goods_id")
+    token = request.session.get("token")
+
+    # 1标识添加成功，0标识添加失败，-1标识未登录
+    result = {
+        "msg": "增",
+        "status": 1
+    }
+    if token:
+        user = User.objects.get(token=token)
+        goods = Goods.objects.get(pk=goods_id)
+
+        # 在购物车，改数量  不在购物车，添加进去
+        carts = Cart.objects.filter(user=user).filter(goods=goods)
+        if carts.exists():
+            cart = carts.first()
+            cart.number = cart.number + 1
+            cart.save()
+            result['number'] = cart.number
+        else:  # 添加一条新记录
+            cart = Cart()
+            cart.user = user
+            cart.goods = goods
+            cart.number = 1
+            cart.save()
+            result['number'] = cart.number
+        return JsonResponse(result)
+    else:
+        result["msg"] = "未登录，请登录后操作"
+        result["status"] = -1
+        return JsonResponse(result)
+
+
+# 购物车减数量
+def delcart(request):
+    token = request.session.get('token')
+    goods_id = request.GET.get('goods_id')
+
+    user = User.objects.get(token=token)
+    goods = Goods.objects.get(pk=goods_id)
+
+    cart = Cart.objects.filter(user=user).filter(goods=goods).first()
+    cart.number = cart.number - 1
+    cart.save()
+    result = {
+        'msg': '减',
+        'status': 1,
+        'number': cart.number
+    }
+    return JsonResponse(result)
