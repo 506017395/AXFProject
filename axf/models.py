@@ -143,3 +143,25 @@ class Cart(models.Model):
 
     class Meta:
         db_table = "axf_cart"
+
+
+# 订单
+class Order(models.Model):
+    # 用户
+    user = models.ForeignKey(User)
+    # 创建时间
+    createtime = models.DateTimeField(auto_now_add=True)
+    # 状态
+    status = models.IntegerField(default=1)
+    # 订单号
+    identifier = models.CharField(max_length=256)
+
+
+# 订单商品
+class OrderGoods(models.Model):
+    # 订单
+    order = models.ForeignKey(Order)
+    # 商品
+    goods = models.ForeignKey(Goods)
+    # 个数
+    number = models.IntegerField(default=1)

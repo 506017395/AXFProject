@@ -78,7 +78,7 @@ DATABASES = {
         'NAME': "axfdb",
         "USER": "root",
         "PASSWORD": "lzz666",
-        "HOST": "182.254.228.82",
+        "HOST": "localhost",
         "PORT": "3306"
     }
 }

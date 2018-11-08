@@ -1,5 +1,7 @@
 import hashlib
 import os
+import random
+import time
 import uuid
 
 from django.http import JsonResponse
@@ -8,7 +10,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 # 首页
 from AXFProject import settings
-from axf.models import Wheel, Nav, Mustbuy, Shop, Mainshow, Goods, Foodtypes, User, Cart
+from axf.models import Wheel, Nav, Mustbuy, Shop, Mainshow, Goods, Foodtypes, User, Cart, Order, OrderGoods
 
 
 def home(request):
@@ -79,10 +81,12 @@ def market(request, chilecid=0, sort_index=0):
 # 购物车
 def cart(request):
     token = request.session.get('token')
+    result = {}
     if token:
         user = User.objects.get(token=token)
         carts = Cart.objects.filter(user=user).exclude(number=0)
-        return render(request, 'cart/cart.html', context={'carts': carts})
+        result["carts"] = carts
+        return render(request, 'cart/cart.html', result)
     else:
         return redirect('axf:login')
 
@@ -227,5 +231,60 @@ def delcart(request):
         'msg': '减',
         'status': 1,
         'number': cart.number
+    }
+    return JsonResponse(result)
+
+
+# 购物车商品是否选中
+def isselect(request):
+    cart = Cart.objects.get(pk=request.GET.get("cart_id"))
+    cart.is_select = False if cart.is_select else True
+    cart.save()
+    result = {
+        "is_select": cart.is_select,
+    }
+    return JsonResponse(result)
+
+
+# 购物车商品全选
+def allselect(request):
+    user = User.objects.get(token=request.session.get("token"))
+    cart_list = Cart.objects.filter(user=user);
+    is_select = True if request.GET.get("is_select") == "true" else False
+    for cart in cart_list:
+        cart.is_select = is_select
+        cart.save()
+    result = {
+        "is_select": is_select,
+    }
+    return JsonResponse(result)
+
+
+# 下单
+def placeorder(request):
+    token = request.session.get("token")
+    user = User.objects.get(token=token)
+    # 生成订单
+    order = Order()
+    order.user = user
+    order.identifier = str(int(time.time())) + str(random.randrange(100000, 1000000))
+    order.save()
+
+    # 订单商品
+    carts = Cart.objects.filter(user=user).filter(isselect=True)
+    for cart in carts:
+        orderGoods = OrderGoods()
+        orderGoods.order = order
+        orderGoods.goods = cart.goods
+        orderGoods.number = cart.number
+        orderGoods.save()
+
+        # 从购物车移除
+        cart.delete()
+
+    result = {
+        "status": 1,
+        "msg": "下单成功",
+        "identifier": order.identifier,
     }
     return JsonResponse(result)

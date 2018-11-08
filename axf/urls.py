@@ -8,6 +8,10 @@ urlpatterns = [
     url("^cart/$", views.cart, name="cart"),  # 购物车
     url("^addcart/$", views.addcart, name="addcart"),  # 添加到购物车
     url("^delcart/$", views.delcart, name="delcart"),  # 删除购物车数量
+    url("^isselect/$", views.isselect, name="isselect"),  # 购物车商品是否选中
+    url("^allselect/$", views.allselect, name="allselect"),  # 购物车商品全选
+    url("^placeorder/$", views.placeorder, name="placeorder"),  # 下单
+
     url("^mine/$", views.mine, name="mine"),  # 我的
     url("^login/$", views.login, name="login"),  # 登录
     url("^logout/$", views.logout, name="logout"),  # 注销
